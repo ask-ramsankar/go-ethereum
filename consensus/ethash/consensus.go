@@ -332,6 +332,7 @@ func CalcDifficulty(config *params.ChainConfig, time uint64, parent *types.Heade
 // Some weird constants to avoid constant memory allocs for them.
 var (
 	expDiffPeriod = big.NewInt(100000)
+	big0	      = big.NewInt(0)
 	big1          = big.NewInt(1)
 	big2          = big.NewInt(2)
 	big9          = big.NewInt(9)
@@ -422,7 +423,7 @@ func calcDifficultyHomestead(time uint64, parent *types.Header) *big.Int {
 	// 1 - (block_timestamp - parent_timestamp) // 10
 	x.Sub(bigTime, bigParentTime)
 	x.Div(x, big10)
-	x.Sub(big1, x)
+	x.Sub(big0, x)
 
 	// max(1 - (block_timestamp - parent_timestamp) // 10, -99)
 	if x.Cmp(bigMinus99) < 0 {
